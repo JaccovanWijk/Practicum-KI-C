@@ -54,9 +54,22 @@ class PerceptronClassifier:
         for iteration in range(self.max_iterations):
             print "Starting iteration ", iteration, "..."
             for i in range(len(trainingData)):
-                "*** YOUR CODE HERE ***"
-                util.raiseNotDefined()
-
+                #Set current f
+                w = trainingData[i]
+                #Set current real y
+                y = trainingLabels[i]
+                
+                #Find y' (maxY)
+                score = util.Counter()
+                for l in self.legalLabels:
+                    score[l] = self.weights[l] * w
+                maxY = score.argMax()
+                
+                #Update weights
+                if maxY != y:
+                    self.weights[y] += w
+                    self.weights[maxY] -= w
+                        
     def classify(self, data ):
         """
         Classifies each datum as the label that most closely matches the prototype vector
